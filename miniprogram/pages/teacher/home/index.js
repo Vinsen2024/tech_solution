@@ -17,6 +17,9 @@ Page({
     // 归因信息
     attribution: null,
     contactInfo: null, // 显示的联系方式（讲师或经纪人）
+    
+    // 错误信息
+    errorMsg: null,
   },
 
   /**
@@ -24,17 +27,15 @@ Page({
    * 硬约束 6.1: 归因触发时机 - onLoad
    */
   async onLoad(options) {
-    const { teacherId, share_id, scene } = options;
+    console.log('[TeacherHome] onLoad options:', options);
     
-    if (!teacherId) {
-      wx.showToast({ title: '参数错误', icon: 'error' });
-      return;
-    }
-
+    // 默认使用讲师ID 1（开发测试用）
+    let teacherId = options.teacherId || '1';
+    
     this.setData({
       teacherId: parseInt(teacherId, 10),
-      shareId: share_id || null,
-      scene: scene || null,
+      shareId: options.share_id || null,
+      scene: options.scene || null,
     });
 
     await this.initPage();
@@ -56,19 +57,24 @@ Page({
    */
   async initPage() {
     try {
-      this.setData({ loading: true });
+      this.setData({ loading: true, errorMsg: null });
+      console.log('[TeacherHome] 开始初始化页面...');
 
       // 1. 确保已登录
       await ensureLoggedIn();
+      console.log('[TeacherHome] 登录状态确认完成');
 
       // 2. 解析归因
       await this.resolveAndUpdateAttribution();
+      console.log('[TeacherHome] 归因解析完成');
 
       // 3. 获取讲师主页信息
       await this.loadTeacherHome();
+      console.log('[TeacherHome] 讲师信息加载完成');
 
     } catch (error) {
-      console.error('初始化页面失败', error);
+      console.error('[TeacherHome] 初始化页面失败', error);
+      this.setData({ errorMsg: error.message || '加载失败' });
       wx.showToast({ title: error.message || '加载失败', icon: 'none' });
     } finally {
       this.setData({ loading: false });
@@ -93,7 +99,10 @@ Page({
     const { teacherId, attribution } = this.data;
     const brokerId = attribution?.brokerId;
 
+    console.log('[TeacherHome] 请求讲师主页, teacherId:', teacherId, 'brokerId:', brokerId);
+    
     const homeData = await getTeacherHome(teacherId, brokerId);
+    console.log('[TeacherHome] 获取到讲师数据:', homeData);
 
     // 硬约束 6.3: 联系人显示规则
     let contactInfo;
@@ -159,6 +168,13 @@ Page({
         },
       });
     }
+  },
+
+  /**
+   * 重试加载
+   */
+  onRetry() {
+    this.initPage();
   },
 
   /**

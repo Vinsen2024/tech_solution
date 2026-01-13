@@ -192,3 +192,38 @@
   color: #999;
   font-size: 28rpx;
 }
+
+/* 错误状态 */
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  padding: 40rpx;
+}
+
+.error-icon {
+  font-size: 100rpx;
+  margin-bottom: 30rpx;
+}
+
+.error-text {
+  color: #666;
+  font-size: 30rpx;
+  text-align: center;
+  margin-bottom: 40rpx;
+}
+
+.retry-btn {
+  padding: 20rpx 60rpx;
+  background-color: #667eea;
+  color: #fff;
+  font-size: 30rpx;
+  border-radius: 40rpx;
+  border: none;
+}
+
+.retry-btn::after {
+  border: none;
+}

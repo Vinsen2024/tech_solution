@@ -1,7 +1,6 @@
 // services/attribution.js
 const { post } = require('../utils/request');
 const { ensureLoggedIn } = require('./auth');
-const app = getApp();
 
 /**
  * 解析归因
@@ -11,6 +10,14 @@ const app = getApp();
  * @param {string} scene - 场景值 (可选)
  */
 async function resolveAttribution(teacherId, shareId, scene) {
+  const app = getApp();
+  
+  // 开发模式下返回模拟数据
+  if (app.globalData.devMode) {
+    console.log('[DEV] 跳过归因解析，返回空归因');
+    return { brokerId: null, shareId: null };
+  }
+  
   // 确保已登录
   await ensureLoggedIn();
 
@@ -53,6 +60,7 @@ async function resolveAttribution(teacherId, shareId, scene) {
  * @param {number} teacherId - 讲师ID
  */
 function getCurrentAttribution(teacherId) {
+  const app = getApp();
   return app.getAttributionCache(teacherId);
 }
 

@@ -6,8 +6,15 @@
     <text class="loading-text">加载中...</text>
   </view>
 
+  <!-- 错误状态 -->
+  <view class="error-container" wx:elif="{{errorMsg}}">
+    <text class="error-icon">😔</text>
+    <text class="error-text">{{errorMsg}}</text>
+    <button class="retry-btn" bindtap="onRetry">重试</button>
+  </view>
+
   <!-- 主内容 -->
-  <view class="content" wx:else>
+  <view class="content" wx:elif="{{teacher}}">
     <!-- 讲师信息卡片 -->
     <view class="teacher-card card">
       <view class="teacher-header">
@@ -33,11 +40,11 @@
           <text class="contact-name">{{contactInfo.name}}</text>
           <view class="contact-actions">
             <button class="contact-btn" wx:if="{{contactInfo.phone}}" bindtap="onCallPhone">
-              <text class="iconfont icon-phone"></text>
+              <text>📞</text>
               <text>电话咨询</text>
             </button>
             <button class="contact-btn" wx:if="{{contactInfo.wechat}}" bindtap="onCopyWechat">
-              <text class="iconfont icon-wechat"></text>
+              <text>💬</text>
               <text>微信咨询</text>
             </button>
           </view>
@@ -64,7 +71,7 @@
     <!-- CTA 按钮 -->
     <view class="cta-container">
       <button class="cta-btn btn-primary" bindtap="onCtaClick">
-        {{teacher.ctaConfig.text || '立即咨询'}}
+        {{teacher.ctaConfig.primaryText || '立即咨询'}}
       </button>
     </view>
   </view>

@@ -1,13 +1,28 @@
 // services/auth.js
 const { post } = require('../utils/request');
-const app = getApp();
 
 /**
  * 微信登录
  * 获取 code 并换取 token
  */
 function wxLogin() {
+  const app = getApp();
+  
   return new Promise((resolve, reject) => {
+    // 开发模式下直接返回测试数据
+    if (app.globalData.devMode) {
+      console.log('[DEV] 跳过微信登录，使用测试数据');
+      const devData = {
+        token: 'dev_test_token',
+        openid: 'test_openid_001',
+        userId: 1,
+        isNewUser: false,
+      };
+      app.saveLoginState(devData);
+      resolve(devData);
+      return;
+    }
+    
     // 检查是否已有有效 token
     if (app.globalData.token) {
       resolve({
@@ -47,6 +62,13 @@ function wxLogin() {
  * 如果未登录则自动登录
  */
 async function ensureLoggedIn() {
+  const app = getApp();
+  
+  // 开发模式下自动设置token
+  if (app.globalData.devMode && !app.globalData.token) {
+    app.setDevToken();
+  }
+  
   if (!app.globalData.token) {
     await wxLogin();
   }
@@ -61,6 +83,7 @@ async function ensureLoggedIn() {
  * 退出登录
  */
 function logout() {
+  const app = getApp();
   app.clearLoginState();
 }
 
