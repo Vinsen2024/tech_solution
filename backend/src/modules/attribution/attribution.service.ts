@@ -72,7 +72,7 @@ export class AttributionService {
         expiresAt,
         brokerInfo,
       };
-    } else if (existingBinding && new Date() < existingBinding.expiresAt) {
+    } else if (existingBinding?.expiresAt && new Date() < existingBinding.expiresAt) {
       // 无有效分享链接，但有未过期的绑定 -> 返回现有绑定
       const brokerInfo = await this.getBrokerInfo(existingBinding.brokerId);
 
