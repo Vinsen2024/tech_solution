@@ -1,0 +1,83 @@
+/* pages/lead/intent/index.wxss */
+.page {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  padding: 30rpx;
+}
+
+.header {
+  padding: 40rpx 0;
+  text-align: center;
+}
+
+.title {
+  display: block;
+  font-size: 44rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 16rpx;
+}
+
+.subtitle {
+  display: block;
+  font-size: 28rpx;
+  color: #999;
+}
+
+.intent-list {
+  margin-top: 30rpx;
+}
+
+.intent-item {
+  display: flex;
+  align-items: center;
+  padding: 40rpx 30rpx;
+  margin-bottom: 20rpx;
+  transition: all 0.2s ease;
+}
+
+.intent-item:active {
+  transform: scale(0.98);
+  background-color: #fafafa;
+}
+
+.intent-icon {
+  width: 80rpx;
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48rpx;
+  margin-right: 24rpx;
+}
+
+.intent-content {
+  flex: 1;
+}
+
+.intent-title {
+  display: block;
+  font-size: 34rpx;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+
+.intent-desc {
+  display: block;
+  font-size: 26rpx;
+  color: #999;
+}
+
+.intent-arrow {
+  width: 40rpx;
+  height: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.arrow {
+  font-size: 40rpx;
+  color: #ccc;
+}

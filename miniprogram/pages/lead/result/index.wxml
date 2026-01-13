@@ -1,0 +1,98 @@
+<!--pages/lead/result/index.wxml-->
+<view class="page">
+  <!-- 加载状态 -->
+  <view class="loading-section" wx:if="{{loading}}">
+    <view class="loading-animation">
+      <view class="loading-circle"></view>
+      <view class="loading-circle"></view>
+      <view class="loading-circle"></view>
+    </view>
+    <text class="loading-title">AI正在分析您的需求</text>
+    <text class="loading-subtitle">请稍候...</text>
+    
+    <!-- 预览摘要 -->
+    <view class="preview-card card" wx:if="{{leaderSummary}}">
+      <text class="preview-label">初步分析</text>
+      <text class="preview-content">{{leaderSummary}}</text>
+    </view>
+  </view>
+
+  <!-- 结果内容 -->
+  <view class="result-content" wx:else>
+    <!-- 成功提示 -->
+    <view class="success-header">
+      <text class="success-icon">✅</text>
+      <text class="success-title">分析完成</text>
+    </view>
+
+    <!-- 摘要切换 -->
+    <view class="summary-tabs">
+      <view 
+        class="tab-item {{summaryMode === 'leader' ? 'active' : ''}}"
+        data-mode="leader"
+        bindtap="onSwitchMode"
+      >
+        <text>决策摘要</text>
+      </view>
+      <view 
+        class="tab-item {{summaryMode === 'teacher' ? 'active' : ''}}"
+        data-mode="teacher"
+        bindtap="onSwitchMode"
+      >
+        <text>详细分析</text>
+      </view>
+    </view>
+
+    <!-- 摘要内容 -->
+    <view class="summary-card card">
+      <view class="summary-content" wx:if="{{summaryMode === 'leader'}}">
+        <text>{{leaderSummary}}</text>
+      </view>
+      <view class="summary-content" wx:else>
+        <text>{{teacherSummary}}</text>
+      </view>
+    </view>
+
+    <!-- 覆盖率指示 -->
+    <view class="coverage-card card" wx:if="{{coverageScore}}">
+      <view class="coverage-header">
+        <text class="coverage-title">需求匹配度</text>
+        <text class="coverage-score">{{coverageScore * 100}}%</text>
+      </view>
+      <view class="coverage-bar">
+        <view class="coverage-fill" style="width: {{coverageScore * 100}}%"></view>
+      </view>
+      <text class="coverage-tip" wx:if="{{coverageScore < 0.6}}">
+        ⚠️ 当前需求与讲师能力覆盖度较低，建议进一步沟通
+      </text>
+    </view>
+
+    <!-- 澄清问题 -->
+    <view class="questions-card card" wx:if="{{clarifyingQuestions.length > 0}}">
+      <view class="section-title">
+        <text>建议深入了解</text>
+      </view>
+      <view class="questions-list">
+        <view class="question-item" wx:for="{{clarifyingQuestions}}" wx:key="index">
+          <text class="question-number">{{index + 1}}</text>
+          <text class="question-text">{{item}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="action-buttons">
+      <button 
+        class="action-btn export-btn" 
+        bindtap="onExportPdf"
+        loading="{{exporting}}"
+        disabled="{{exporting}}"
+      >
+        {{exporting ? exportProgress : '导出PDF报告'}}
+      </button>
+      <button class="action-btn home-btn" bindtap="onBackHome">
+        返回首页
+      </button>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,171 @@
+/* pages/broker/leads/index.wxss */
+.page {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  padding: 30rpx;
+}
+
+/* 线索列表 */
+.leads-list {
+  padding-bottom: 30rpx;
+}
+
+.lead-item {
+  margin-bottom: 20rpx;
+  padding: 30rpx;
+}
+
+.lead-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.visitor-info {
+  display: flex;
+  align-items: center;
+}
+
+.visitor-avatar {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  margin-right: 16rpx;
+}
+
+.visitor-name {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+.lead-status {
+  padding: 8rpx 20rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+}
+
+.status-new {
+  background-color: #e6f7ff;
+  color: #1890ff;
+}
+
+.status-contacted {
+  background-color: #fff7e6;
+  color: #fa8c16;
+}
+
+.status-qualified {
+  background-color: #f6ffed;
+  color: #52c41a;
+}
+
+.status-closed {
+  background-color: #f5f5f5;
+  color: #999;
+}
+
+.lead-content {
+  margin-bottom: 20rpx;
+}
+
+.lead-intent {
+  display: block;
+  font-size: 32rpx;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 12rpx;
+}
+
+.lead-summary {
+  display: block;
+  font-size: 28rpx;
+  color: #666;
+  line-height: 1.6;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.lead-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 20rpx;
+  border-top: 1rpx solid #eee;
+}
+
+.lead-time {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.lead-action {
+  font-size: 26rpx;
+  color: #667eea;
+}
+
+/* 加载更多 */
+.load-more {
+  text-align: center;
+  padding: 30rpx 0;
+  font-size: 26rpx;
+  color: #999;
+}
+
+/* 加载状态 */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+}
+
+.loading-spinner {
+  width: 60rpx;
+  height: 60rpx;
+  border: 4rpx solid #f3f3f3;
+  border-top: 4rpx solid #667eea;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+  margin-top: 20rpx;
+  color: #999;
+  font-size: 28rpx;
+}
+
+/* 空状态 */
+.empty-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+}
+
+.empty-icon {
+  font-size: 100rpx;
+  margin-bottom: 30rpx;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999;
+  margin-bottom: 12rpx;
+}
+
+.empty-tip {
+  font-size: 24rpx;
+  color: #bbb;
+}

@@ -1,0 +1,90 @@
+<!--pages/teacher/leads/index.wxml-->
+<wxs module="utils">
+module.exports = {
+  getStatusLabel: function(status) {
+    var statusMap = {
+      NEW: '新线索',
+      CONTACTED: '已联系',
+      QUALIFIED: '已确认',
+      CLOSED: '已关闭'
+    };
+    return statusMap[status] || status;
+  },
+  getStatusClass: function(status) {
+    var classMap = {
+      NEW: 'status-new',
+      CONTACTED: 'status-contacted',
+      QUALIFIED: 'status-qualified',
+      CLOSED: 'status-closed'
+    };
+    return classMap[status] || '';
+  },
+  formatTime: function(dateStr) {
+    if (!dateStr) return '';
+    var date = getDate(dateStr);
+    var now = getDate();
+    var diff = now - date;
+    
+    if (diff < 60000) return '刚刚';
+    if (diff < 3600000) return Math.floor(diff / 60000) + '分钟前';
+    if (diff < 86400000) return Math.floor(diff / 3600000) + '小时前';
+    if (diff < 604800000) return Math.floor(diff / 86400000) + '天前';
+    
+    return (date.getMonth() + 1) + '月' + date.getDate() + '日';
+  }
+}
+</wxs>
+
+<view class="page">
+  <!-- 加载状态 -->
+  <view class="loading-container" wx:if="{{loading && leads.length === 0}}">
+    <view class="loading-spinner"></view>
+    <text class="loading-text">加载中...</text>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-container" wx:elif="{{!loading && leads.length === 0}}">
+    <text class="empty-icon">📋</text>
+    <text class="empty-text">暂无线索</text>
+  </view>
+
+  <!-- 线索列表 -->
+  <view class="leads-list" wx:else>
+    <view 
+      class="lead-item card"
+      wx:for="{{leads}}"
+      wx:key="id"
+      data-id="{{item.id}}"
+      bindtap="onViewLead"
+    >
+      <view class="lead-header">
+        <view class="visitor-info" wx:if="{{item.visitor}}">
+          <image class="visitor-avatar" src="{{item.visitor.avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+          <text class="visitor-name">{{item.visitor.nickname}}</text>
+        </view>
+        <view class="lead-status {{utils.getStatusClass(item.status)}}">
+          <text>{{utils.getStatusLabel(item.status)}}</text>
+        </view>
+      </view>
+      
+      <view class="lead-content">
+        <text class="lead-intent">{{item.intent}}</text>
+        <text class="lead-summary">{{item.leaderSummary}}</text>
+      </view>
+      
+      <view class="lead-footer">
+        <text class="lead-time">{{utils.formatTime(item.createdAt)}}</text>
+        <text class="lead-action">查看详情 ›</text>
+      </view>
+    </view>
+
+    <!-- 加载更多 -->
+    <view class="load-more" wx:if="{{hasMore}}">
+      <text wx:if="{{loading}}">加载中...</text>
+      <text wx:else>上拉加载更多</text>
+    </view>
+    <view class="load-more" wx:else>
+      <text>没有更多了</text>
+    </view>
+  </view>
+</view>

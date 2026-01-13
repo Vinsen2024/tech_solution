@@ -1,0 +1,104 @@
+<!--pages/lead/form/index.wxml-->
+<view class="page">
+  <view class="header">
+    <text class="title">描述您的需求</text>
+    <text class="subtitle">我们将为您匹配最合适的方案</text>
+  </view>
+
+  <!-- 输入方式切换 -->
+  <view class="input-tabs">
+    <view 
+      class="tab-item {{inputType === 'text' ? 'active' : ''}}" 
+      data-type="text"
+      bindtap="onSwitchInputType"
+    >
+      <text>文字输入</text>
+    </view>
+    <view 
+      class="tab-item {{inputType === 'voice' ? 'active' : ''}}" 
+      data-type="voice"
+      bindtap="onSwitchInputType"
+    >
+      <text>语音输入</text>
+    </view>
+    <view 
+      class="tab-item {{inputType === 'select' ? 'active' : ''}}" 
+      data-type="select"
+      bindtap="onSwitchInputType"
+    >
+      <text>快捷选择</text>
+    </view>
+  </view>
+
+  <!-- 文字输入 -->
+  <view class="input-section card" wx:if="{{inputType === 'text'}}">
+    <textarea 
+      class="text-input"
+      placeholder="请详细描述您的需求，例如：培训目标、参与人数、时间安排等..."
+      maxlength="500"
+      value="{{textContent}}"
+      bindinput="onTextInput"
+    ></textarea>
+    <view class="text-counter">
+      <text>{{textContent.length}}/500</text>
+    </view>
+  </view>
+
+  <!-- 语音输入 -->
+  <view class="input-section card" wx:if="{{inputType === 'voice'}}">
+    <view class="voice-container">
+      <!-- 未录音状态 -->
+      <view class="voice-record" wx:if="{{!voiceUrl}}">
+        <view 
+          class="record-btn {{isRecording ? 'recording' : ''}}"
+          bindtouchstart="onStartRecord"
+          bindtouchend="onStopRecord"
+        >
+          <text class="record-icon">🎙️</text>
+          <text class="record-text">{{isRecording ? '松开结束' : '按住说话'}}</text>
+        </view>
+        <text class="record-tip">最长60秒</text>
+      </view>
+
+      <!-- 已录音状态 -->
+      <view class="voice-preview" wx:else>
+        <view class="voice-info" bindtap="onPlayVoice">
+          <text class="voice-icon">🔊</text>
+          <text class="voice-duration">{{voiceDuration}}秒</text>
+          <text class="voice-play">点击播放</text>
+        </view>
+        <view class="voice-delete" bindtap="onDeleteVoice">
+          <text>删除重录</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 快捷选择 -->
+  <view class="input-section card" wx:if="{{inputType === 'select'}}">
+    <view class="quick-options">
+      <view 
+        class="option-item {{selectedOptions.indexOf(item) > -1 ? 'selected' : ''}}"
+        wx:for="{{quickOptions}}"
+        wx:key="*this"
+        data-option="{{item}}"
+        bindtap="onSelectOption"
+      >
+        <text class="option-check">{{selectedOptions.indexOf(item) > -1 ? '✓' : ''}}</text>
+        <text class="option-text">{{item}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 提交按钮 -->
+  <view class="submit-container">
+    <button 
+      class="submit-btn btn-primary" 
+      bindtap="onSubmit"
+      loading="{{submitting}}"
+      disabled="{{submitting}}"
+    >
+      {{submitting ? '提交中...' : '提交需求'}}
+    </button>
+  </view>
+</view>

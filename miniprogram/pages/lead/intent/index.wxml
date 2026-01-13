@@ -1,0 +1,26 @@
+<!--pages/lead/intent/index.wxml-->
+<view class="page">
+  <view class="header">
+    <text class="title">您想要什么服务？</text>
+    <text class="subtitle">选择一个最符合您需求的选项</text>
+  </view>
+
+  <view class="intent-list">
+    <view 
+      class="intent-item card" 
+      wx:for="{{intentOptions}}" 
+      wx:key="id"
+      data-intent="{{item.id}}"
+      bindtap="onSelectIntent"
+    >
+      <view class="intent-icon">{{item.icon}}</view>
+      <view class="intent-content">
+        <text class="intent-title">{{item.title}}</text>
+        <text class="intent-desc">{{item.desc}}</text>
+      </view>
+      <view class="intent-arrow">
+        <text class="arrow">›</text>
+      </view>
+    </view>
+  </view>
+</view>

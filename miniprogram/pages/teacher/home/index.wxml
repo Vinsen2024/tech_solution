@@ -1,0 +1,71 @@
+<!--pages/teacher/home/index.wxml-->
+<view class="page">
+  <!-- 加载状态 -->
+  <view class="loading-container" wx:if="{{loading}}">
+    <view class="loading-spinner"></view>
+    <text class="loading-text">加载中...</text>
+  </view>
+
+  <!-- 主内容 -->
+  <view class="content" wx:else>
+    <!-- 讲师信息卡片 -->
+    <view class="teacher-card card">
+      <view class="teacher-header">
+        <image class="teacher-avatar" src="{{teacher.avatar || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+        <view class="teacher-info">
+          <text class="teacher-name">{{teacher.name}}</text>
+          <text class="teacher-title">{{teacher.title}}</text>
+        </view>
+      </view>
+      <view class="teacher-bio" wx:if="{{teacher.bio}}">
+        <text>{{teacher.bio}}</text>
+      </view>
+    </view>
+
+    <!-- 联系人卡片 -->
+    <view class="contact-card card" wx:if="{{contactInfo}}">
+      <view class="section-title">
+        <text>{{contactInfo.type === 'broker' ? '专属顾问' : '联系讲师'}}</text>
+      </view>
+      <view class="contact-info">
+        <image class="contact-avatar" src="{{contactInfo.avatar || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+        <view class="contact-detail">
+          <text class="contact-name">{{contactInfo.name}}</text>
+          <view class="contact-actions">
+            <button class="contact-btn" wx:if="{{contactInfo.phone}}" bindtap="onCallPhone">
+              <text class="iconfont icon-phone"></text>
+              <text>电话咨询</text>
+            </button>
+            <button class="contact-btn" wx:if="{{contactInfo.wechat}}" bindtap="onCopyWechat">
+              <text class="iconfont icon-wechat"></text>
+              <text>微信咨询</text>
+            </button>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 能力模块列表 -->
+    <view class="modules-section" wx:if="{{modules.length > 0}}">
+      <view class="section-title">
+        <text>服务能力</text>
+      </view>
+      <view class="modules-list">
+        <view class="module-item card" wx:for="{{modules}}" wx:key="id">
+          <text class="module-title">{{item.title}}</text>
+          <text class="module-desc">{{item.description}}</text>
+          <view class="module-tags" wx:if="{{item.tags && item.tags.length > 0}}">
+            <text class="module-tag" wx:for="{{item.tags}}" wx:for-item="tag" wx:key="*this">{{tag}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- CTA 按钮 -->
+    <view class="cta-container">
+      <button class="cta-btn btn-primary" bindtap="onCtaClick">
+        {{teacher.ctaConfig.text || '立即咨询'}}
+      </button>
+    </view>
+  </view>
+</view>
