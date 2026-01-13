@@ -49,7 +49,7 @@ export class BrokersService {
         shareId: existingShare.shareId,
         path: `/pages/teacher/home?teacherId=${teacherId}&share_id=${existingShare.shareId}`,
         scene: `s=${existingShare.shareId}`,
-        expiresAt: existingShare.expiresAt,
+        expiresAt: existingShare.expiresAt ?? undefined,
       };
     }
 
