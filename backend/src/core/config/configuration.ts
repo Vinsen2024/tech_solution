@@ -1,11 +1,12 @@
 export default () => ({
-  port: parseInt(process.env.PORT, 10) || 3000,
+  port: parseInt(process.env.PORT || '3000', 10),
   nodeEnv: process.env.NODE_ENV || 'development',
 
   // 微信小程序配置
   wechat: {
-    appId: process.env.WX_APPID,
-    secret: process.env.WX_SECRET,
+    appId: process.env.WX_APPID || process.env.WECHAT_APP_ID,
+    secret: process.env.WX_SECRET || process.env.WECHAT_SECRET,
+    newLeadTemplateId: process.env.WECHAT_NEW_LEAD_TEMPLATE_ID,
   },
 
   // JWT配置
@@ -17,16 +18,16 @@ export default () => ({
   // 数据库配置
   database: {
     host: process.env.DB_HOST || 'localhost',
-    port: parseInt(process.env.DB_PORT, 10) || 3306,
+    port: parseInt(process.env.DB_PORT || '3306', 10),
     username: process.env.DB_USERNAME || 'root',
     password: process.env.DB_PASSWORD || '',
-    database: process.env.DB_DATABASE || 'ai_lecturer',
+    database: process.env.DB_DATABASE || 'ai_lecturer_hub',
   },
 
   // Redis配置
   redis: {
     host: process.env.REDIS_HOST || 'localhost',
-    port: parseInt(process.env.REDIS_PORT, 10) || 6379,
+    port: parseInt(process.env.REDIS_PORT || '6379', 10),
     password: process.env.REDIS_PASSWORD || undefined,
   },
 
@@ -40,8 +41,8 @@ export default () => ({
 
   // LLM配置
   llm: {
-    apiKey: process.env.LLM_API_KEY,
+    apiKey: process.env.OPENAI_API_KEY || process.env.LLM_API_KEY,
     baseUrl: process.env.LLM_BASE_URL || 'https://api.openai.com/v1',
-    model: process.env.LLM_MODEL || 'gpt-4',
+    model: process.env.LLM_MODEL || 'gpt-4.1-mini',
   },
 });

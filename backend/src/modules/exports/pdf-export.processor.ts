@@ -1,5 +1,5 @@
 import { Processor, Process } from '@nestjs/bull';
-import { Job } from 'bull';
+import type { Job } from 'bull';
 import { Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -48,9 +48,9 @@ export class PdfExportProcessor {
         this.generateAndUploadPdf(jobId, leadId),
         timeoutPromise,
       ]);
-    } catch (error) {
+    } catch (error: any) {
       this.logger.error(`PDF导出任务失败: jobId=${jobId}`, error);
-      await this.updateJobStatus(jobId, ExportJobStatus.FAILED, null, error.message);
+      await this.updateJobStatus(jobId, ExportJobStatus.FAILED, undefined, error.message);
       throw error;
     }
   }
@@ -69,6 +69,10 @@ export class PdfExportProcessor {
     const teacher = await this.teacherRepository.findOne({
       where: { id: lead.teacherId },
     });
+
+    if (!teacher) {
+      throw new Error('讲师不存在');
+    }
 
     const modules = await this.moduleRepository.find({
       where: { teacherId: lead.teacherId, isActive: true },
@@ -94,7 +98,7 @@ export class PdfExportProcessor {
 
     // 4. 上传到COS (硬约束 9: COS路径规范)
     const cosPath = `teachers/${lead.teacherId}/leads/${leadId}/exports/${jobId}.pdf`;
-    const uploadResult = await this.cosService.upload(cosPath, pdfBuffer);
+    await this.cosService.upload(cosPath, pdfBuffer);
 
     // 5. 生成签名URL
     const signedUrl = await this.cosService.getSignedUrl(cosPath);

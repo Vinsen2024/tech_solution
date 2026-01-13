@@ -34,11 +34,11 @@ export class Lead {
   @Column({ name: 'teacher_id', type: 'bigint', unsigned: true, comment: '关联讲师ID' })
   teacherId: number;
 
-  @Column({ name: 'broker_id', type: 'bigint', unsigned: true, nullable: true, comment: '归属经纪人ID' })
-  brokerId: number;
+  @Column({ name: 'broker_id', type: 'bigint', unsigned: true, nullable: true, comment: '归属经纪人id' })
+  brokerId?: number;
 
-  @Column({ name: 'share_id', type: 'varchar', length: 64, nullable: true, comment: '来源分享ID' })
-  shareId: string;
+  @Column({ name: 'share_id', type: 'varchar', length: 64, nullable: true, comment: '来源分享id' })
+  shareId?: string;
 
   @Column({ type: 'varchar', length: 255, comment: '用户意图' })
   intent: string;

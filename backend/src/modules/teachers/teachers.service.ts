@@ -34,7 +34,7 @@ export class TeachersService {
     });
 
     // 如果有经纪人ID，获取经纪人信息
-    let brokerInfo = undefined;
+    let brokerInfo: TeacherHomeResponseDto['broker'] = undefined;
     if (brokerId) {
       const broker = await this.brokerRepository.findOne({
         where: { id: brokerId, isActive: true },

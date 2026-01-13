@@ -54,19 +54,18 @@ export class LeadsService {
     }
 
     // 5. 创建并保存 Lead 实体
-    const newLead = this.leadRepository.create({
-      wxUserId,
-      teacherId,
-      brokerId: attribution?.brokerId || null,
-      shareId: attribution?.shareId || null,
-      intent,
-      input,
-      leaderSummary,
-      teacherSummary: finalTeacherSummary,
-      clarifyingQuestions,
-      coverageScore,
-      status: LeadStatus.NEW,
-    });
+    const newLead = new Lead();
+    newLead.wxUserId = wxUserId;
+    newLead.teacherId = teacherId;
+    newLead.brokerId = attribution?.brokerId;
+    newLead.shareId = attribution?.shareId;
+    newLead.intent = intent;
+    newLead.input = input;
+    newLead.leaderSummary = leaderSummary;
+    newLead.teacherSummary = finalTeacherSummary;
+    newLead.clarifyingQuestions = clarifyingQuestions;
+    newLead.coverageScore = coverageScore;
+    newLead.status = LeadStatus.NEW;
 
     const savedLead = await this.leadRepository.save(newLead);
     this.logger.log(`线索创建成功: id=${savedLead.id}, teacherId=${teacherId}`);

@@ -2,7 +2,7 @@ import { Injectable, NotFoundException, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { InjectQueue } from '@nestjs/bull';
 import { Repository } from 'typeorm';
-import { Queue } from 'bull';
+import type { Queue } from 'bull';
 import { ExportJob, ExportJobStatus, ExportJobType, Lead } from '../../core/database/entities';
 import { CreateExportDto, CreateExportResponseDto, ExportStatusResponseDto } from './dto/export.dto';
 import { CosService } from './cos.service';
