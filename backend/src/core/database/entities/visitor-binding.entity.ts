@@ -28,8 +28,8 @@ export class VisitorBinding {
   @Column({ name: 'last_bound_at', type: 'timestamp', comment: '最后绑定时间' })
   lastBoundAt: Date;
 
-  @Column({ name: 'expires_at', type: 'timestamp', comment: '绑定过期时间' })
-  expiresAt: Date;
+  @Column({ name: 'expires_at', type: 'datetime', nullable: true, default: null, comment: '绑定过期时间' })
+expiresAt: Date | null;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
