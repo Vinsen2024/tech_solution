@@ -29,8 +29,8 @@ export class Share {
   @Column({ name: 'is_active', type: 'boolean', default: true, comment: '是否有效' })
   isActive: boolean;
 
-  @Column({ name: 'expires_at', type: 'timestamp', nullable: true, comment: '过期时间' })
-  expiresAt: Date;
+  @Column({ name: 'expires_at', type: 'datetime', nullable: true, default: null, comment: '过期时间' })
+expiresAt: Date | null;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
