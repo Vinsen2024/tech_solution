@@ -11,20 +11,20 @@ export default () => ({
 
   // JWT配置
   jwt: {
-    secret: process.env.JWT_SECRET || 'default_secret',
+    secret: process.env.JWT_SECRET || 'your-jwt-secret-key-change-in-production',
     expiresIn: process.env.JWT_EXPIRES_IN || '7d',
   },
 
-  // 数据库配置
+  // 数据库配置（支持微信云托管MySQL）
   database: {
-    host: process.env.DB_HOST || 'localhost',
-    port: parseInt(process.env.DB_PORT || '3306', 10),
-    username: process.env.DB_USERNAME || 'root',
-    password: process.env.DB_PASSWORD || '',
-    database: process.env.DB_DATABASE || 'ai_lecturer_hub',
+    host: process.env.MYSQL_ADDRESS?.split(':')[0] || process.env.DB_HOST || 'localhost',
+    port: parseInt(process.env.MYSQL_ADDRESS?.split(':')[1] || process.env.DB_PORT || '3306', 10),
+    username: process.env.MYSQL_USERNAME || process.env.DB_USERNAME || 'root',
+    password: process.env.MYSQL_PASSWORD || process.env.DB_PASSWORD || '',
+    database: process.env.MYSQL_DATABASE || process.env.DB_DATABASE || 'ai_lecturer_hub',
   },
 
-  // Redis配置
+  // Redis配置（微信云托管可选）
   redis: {
     host: process.env.REDIS_HOST || 'localhost',
     port: parseInt(process.env.REDIS_PORT || '6379', 10),

@@ -33,9 +33,15 @@ import {
           Lead,
           ExportJob,
         ],
-        synchronize: configService.get('nodeEnv') === 'development', // 生产环境应设为false
+        // 首次部署时开启 synchronize 自动创建表结构
+        // 生产环境稳定后建议关闭，使用 migrations
+        synchronize: true,
         logging: configService.get('nodeEnv') === 'development',
         charset: 'utf8mb4',
+        // 连接池配置
+        extra: {
+          connectionLimit: 10,
+        },
       }),
       inject: [ConfigService],
     }),

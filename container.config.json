@@ -1,0 +1,14 @@
+{
+  "name": "ai-lecturer-backend",
+  "description": "AI讲师成交中枢后端服务",
+  "containerPort": 80,
+  "envParams": {
+    "NODE_ENV": "production"
+  },
+  "minNum": 0,
+  "maxNum": 10,
+  "cpu": 0.5,
+  "mem": 1,
+  "policyType": "cpu",
+  "policyThreshold": 60
+}

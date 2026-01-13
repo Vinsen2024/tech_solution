@@ -25,10 +25,12 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
 
   const configService = app.get(ConfigService);
-  const port = configService.get('port') || 3000;
+  // 优先使用环境变量 PORT（微信云托管会设置这个变量）
+  const port = process.env.PORT || configService.get('port') || 3000;
 
-  await app.listen(port);
-  console.log(`🚀 Application is running on: http://localhost:${port}/api`);
+  // 监听所有网络接口
+  await app.listen(port, '0.0.0.0');
+  console.log(`🚀 Application is running on port ${port}`);
 }
 
 bootstrap();
