@@ -1,5 +1,5 @@
-# 使用 Node.js 官方镜像
-FROM node:18-alpine AS builder
+# 使用 Node.js 20 完整版镜像（解决 crypto.randomUUID 问题）
+FROM node:20-slim AS builder
 
 # 设置工作目录
 WORKDIR /app
@@ -20,7 +20,7 @@ COPY . .
 RUN pnpm run build
 
 # 生产环境镜像
-FROM node:18-alpine AS runner
+FROM node:20-slim AS runner
 
 WORKDIR /app
 
